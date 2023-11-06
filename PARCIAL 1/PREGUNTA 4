@@ -1,0 +1,22 @@
+
+import multiprocessing
+
+# Función para generar la serie
+def generar_serie(n):
+    serie = []
+    for i in range(n):
+        if i % 2 == 0:
+            serie.append(2 + i//2)
+        else:
+            serie.append(2 + (i-1)//2 * 3)
+    return serie
+
+if name == "main":
+    n = 10  # Número de términos de la serie
+
+    # Crear un proceso para generar la serie
+    with multiprocessing.Pool() as pool:
+        result = pool.map(generar_serie, [n])
+
+    serie = result[0]
+    print(serie)
