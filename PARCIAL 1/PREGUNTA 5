@@ -1,0 +1,45 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
+
+class Program
+{
+    // Función para generar la serie
+    static List<int> GenerarSerie(int n)
+    {
+        List<int> serie = new List<int>();
+        for (int i = 0; i < n; i++)
+        {
+            if (i % 2 == 0)
+            {
+                serie.Add(2 + i / 2);
+            }
+            else
+            {
+                serie.Add(2 + (i - 1) / 2 * 3);
+            }
+        }
+        return serie;
+    }
+
+    static void Main()
+    {
+        int n = 10; // Número de términos de la serie
+
+        List<int> serie = new List<int>();
+
+        Thread thread = new Thread(() =>
+        {
+            serie = GenerarSerie(n);
+        });
+
+        thread.Start();
+        thread.Join();
+
+        Console.WriteLine("Serie generada:");
+        foreach (int term in serie)
+        {
+            Console.Write(term + " ");
+        }
+    }
+}
