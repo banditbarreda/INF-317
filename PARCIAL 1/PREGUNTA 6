@@ -1,0 +1,32 @@
+from mpi4py import MPI
+
+# Función para generar la serie
+def generar_serie(n):
+    serie = []
+    for i in range(n):
+        if i % 2 == 0:
+            serie.append(2 + i//2)
+        else:
+            serie.append(2 + (i-1)//2 * 3)
+    return serie
+
+if __name__ == "__main__":
+    comm = MPI.COMM_WORLD
+    rank = comm.Get_rank()
+    size = comm.Get_size()
+
+    if rank == 0:
+        n = 10  # Número de términos de la serie
+
+        # Genera la serie en el proceso 0
+        serie = generar_serie(n)
+
+        # Envía la serie generada a todos los procesos
+        for i in range(1, size):
+            comm.send(serie, dest=i)
+
+        print(f"Serie generada en proceso 0: {serie}")
+    else:
+        # Recibe la serie generada desde el proceso 0
+        serie = comm.recv(source=0)
+        print(f"Serie recibida en proceso {rank}: {serie}")
