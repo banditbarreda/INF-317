@@ -1,0 +1,36 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int totalPuntos = 1000000; // Número de puntos a generar
+        int puntosEnCirculo = 0; // Contador de puntos dentro del círculo
+
+        Random random = new Random();
+
+        for (int i = 0; i < totalPuntos; i++)
+        {
+            double x = random.NextDouble();
+            double y = random.NextDouble();
+
+            // Calcula la distancia desde el punto al centro del cuadrado
+            double distancia = Math.Sqrt(x * x + y * y);
+
+            // Si el punto está dentro del círculo, incrémenta el contador
+            if (distancia <= 1)
+            {
+                puntosEnCirculo++;
+            }
+        }
+
+        // Calcula el valor aproximado de Pi
+        double pi = 4.0 * puntosEnCirculo / totalPuntos;
+
+        Console.WriteLine($"Valor aproximado de Pi: {pi}");
+
+        // Puedes comparar el valor calculado con el valor real de Pi
+        double piReal = Math.PI;
+        Console.WriteLine($"Valor real de Pi: {piReal}");
+    }
+}
