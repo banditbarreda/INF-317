@@ -1,0 +1,29 @@
+
+#include <stdio.h>
+#include <string.h>
+#include <omp.h>
+
+int main() {
+    char frase[] = "hola mundo como está el clima";
+    char parte1[100];
+    char parte2[100];
+    int len = strlen(frase);
+    
+    #pragma omp parallel for num_threads(4)
+    for (int i = 0; i < len; i++) {
+        if (i < len / 2) {
+            parte1[i] = frase[i];
+            parte2[i] = ' ';
+        } else {
+            parte1[i] = ' ';
+            parte2[i] = frase[i];
+        }
+    }
+    parte1[len / 2] = '\0';
+    parte2[len / 2] = '\0';
+    
+    printf("Parte 1: %s\n", parte1);
+    printf("Parte 2: %s\n", parte2);
+
+    return 0;
+}
